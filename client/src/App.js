@@ -18,8 +18,8 @@ function App() {
 
 const deleteExpense = async (id) => {
   try {
-    const res = await API.delete(`/expenses/${id}`);
-
+    
+    await API.delete(`/expenses/${id}`);
     setExpenses(expenses.filter((expense) => expense._id !== id));
   } catch (error) {
     console.error(error);
