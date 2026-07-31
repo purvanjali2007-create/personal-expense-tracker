@@ -2,6 +2,9 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
+
+
+
 const connectDB = require("./config/db");
 const expenseRoutes = require("./routes/expenseRoutes");
 
@@ -11,7 +14,18 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(cors());
+
+const app = express();
+
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "https://personal-expense-tracker-3hire0wkz.vercel.app"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
 app.use(express.json());
 
 // Test Route
