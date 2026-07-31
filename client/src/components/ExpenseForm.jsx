@@ -44,7 +44,7 @@ const ExpenseForm = ({ getExpenses, editExpense, setEditExpense }) => {
 
     } else {
 
-      await API.post("/api/expenses", expense);
+      await API.post("/expenses", expense);
 
     }
 
