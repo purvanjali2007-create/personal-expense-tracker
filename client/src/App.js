@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 import ExpenseForm from "./components/ExpenseForm";
 import ExpenseList from "./components/ExpenseList";
+import TotalExpense from "./components/TotalExpense";
 import API from "./services/api";
+import "./App.css";
 
 function App() {
 
@@ -10,15 +11,22 @@ function App() {
   const [editExpense, setEditExpense] = useState(null);
 
   const getExpenses = async () => {
-    const res = await API.get("/expenses");
-    setExpenses(res.data.data);
+    try {
+      const res = await API.get("/expenses");
+      setExpenses(res.data.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
     getExpenses();
   }, []);
 
-  const total = expenses.reduce((sum, item) => sum + Number(item.amount), 0);
+  const deleteExpense = async (id) => {
+    await API.delete(`/expenses/${id}`);
+    getExpenses();
+  };
 
   return (
     <div className="container">
@@ -31,11 +39,11 @@ function App() {
         setEditExpense={setEditExpense}
       />
 
-      <h2>Total : ₹ {total}</h2>
+      <TotalExpense expenses={expenses} />
 
       <ExpenseList
         expenses={expenses}
-        getExpenses={getExpenses}
+        deleteExpense={deleteExpense}
         setEditExpense={setEditExpense}
       />
 

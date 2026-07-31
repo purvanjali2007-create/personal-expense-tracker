@@ -1,14 +1,10 @@
-import API from "../services/api";
+import ExpenseItem from "./ExpenseItem";
 
-const ExpenseList = ({ expenses, getExpenses, setEditExpense }) => {
-
-  const deleteExpense = async (id) => {
-
-    await API.delete(`/expenses/${id}`);
-
-    getExpenses();
-
-  };
+const ExpenseList = ({
+  expenses,
+  deleteExpense,
+  setEditExpense
+}) => {
 
   return (
 
@@ -30,30 +26,33 @@ const ExpenseList = ({ expenses, getExpenses, setEditExpense }) => {
 
       <tbody>
 
-        {expenses.map((item) => (
+        {expenses.length===0 ?
 
-          <tr key={item._id}>
+        <tr>
 
-            <td>₹ {item.amount}</td>
-            <td>{item.description}</td>
-            <td>{item.category}</td>
-            <td>{item.date.substring(0,10)}</td>
+          <td colSpan="5">
 
-            <td>
+            No Expense Found
 
-              <button onClick={() => setEditExpense(item)}>
-                Edit
-              </button>
+          </td>
 
-              <button
-                onClick={() => deleteExpense(item._id)}
-              >
-                Delete
-              </button>
+        </tr>
 
-            </td>
+        :
 
-          </tr>
+        expenses.map((expense)=>(
+
+          <ExpenseItem
+
+            key={expense._id}
+
+            expense={expense}
+
+            deleteExpense={deleteExpense}
+
+            setEditExpense={setEditExpense}
+
+          />
 
         ))}
 
