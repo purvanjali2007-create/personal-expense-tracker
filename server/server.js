@@ -28,6 +28,17 @@ app.use(cors({
 
 app.use(express.json());
 
+
+app.use((err, req, res, next) => {
+  console.error("Unhandled Error:", err);
+
+  res.status(500).json({
+    success: false,
+    message: err.message,
+  });
+});
+
+
 // Test Route
 app.get("/", (req, res) => {
     res.send("Expense Tracker API Running...");

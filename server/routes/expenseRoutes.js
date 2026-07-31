@@ -9,6 +9,12 @@ const {
     updateExpense
 } = require("../controllers/expenseController");
 
+router.get("/", (req, res) => {
+    res.json({
+        success: true,
+        message: "Route Working"
+    });
+});
 router.post("/", addExpense);
 
 router.get("/", getExpenses);
