@@ -40,12 +40,21 @@ const getExpenses = async (req, res) => {
   try {
     console.log("Controller reached");
 
+    const expenses = await Expense.find();
+
+    console.log("Expenses:", expenses);
+
     return res.status(200).json({
       success: true,
-      message: "Controller reached"
+      data: expenses,
     });
   } catch (err) {
-    console.error(err);
+    console.error("ERROR:", err);
+
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
   }
 };
 
