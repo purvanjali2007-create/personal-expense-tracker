@@ -37,28 +37,25 @@ const addExpense = async (req, res) => {
 
 // Get All Expenses
 const getExpenses = async (req, res) => {
+  try {
+    console.log("GET /api/expenses called");
 
-    try {
+    const expenses = await Expense.find().sort({ date: -1 });
 
-        const expenses = await Expense.find().sort({
-            date: -1
-        });
+    res.status(200).json({
+      success: true,
+      count: expenses.length,
+      data: expenses,
+    });
+  } catch (err) {
+    console.error("ERROR IN getExpenses:", err);
 
-        res.status(200).json({
-            success: true,
-            count: expenses.length,
-            data: expenses
-        });
-
-    } catch (error) {
-
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
-
-    }
-
+    res.status(500).json({
+      success: false,
+      message: err.message,
+      stack: err.stack
+    });
+  }
 };
 
 // Delete Expense
