@@ -44,13 +44,13 @@ const ExpenseForm = ({
 
     if (editExpense) {
 
-      await API.put(`/expenses/${editExpense._id}`, expense);
+      await API.put(`/${editExpense._id}`, expense);
 
       setEditExpense(null);
 
     } else {
 
-      await API.post("/expenses", expense);
+      await API.post("/", expense);
 
     }
 

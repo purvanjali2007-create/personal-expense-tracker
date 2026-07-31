@@ -12,7 +12,7 @@ function App() {
 
   const getExpenses = async () => {
     try {
-      const res = await API.get("/expenses");
+      const res = await API.get("/");
       setExpenses(res.data.data);
     } catch (err) {
       console.log(err);
@@ -24,9 +24,13 @@ function App() {
   }, []);
 
   const deleteExpense = async (id) => {
-    await API.delete(`/expenses/${id}`);
+  try {
+    await API.delete(`/${id}`);
     getExpenses();
-  };
+  } catch (err) {
+    console.log(err);
+  }
+};
 
   return (
     <div className="container">
