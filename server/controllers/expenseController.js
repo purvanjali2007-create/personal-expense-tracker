@@ -38,23 +38,14 @@ const addExpense = async (req, res) => {
 // Get All Expenses
 const getExpenses = async (req, res) => {
   try {
-    console.log("GET /api/expenses called");
+    console.log("Controller reached");
 
-    const expenses = await Expense.find().sort({ date: -1 });
-
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
-      count: expenses.length,
-      data: expenses,
+      message: "Controller reached"
     });
   } catch (err) {
-    console.error("ERROR IN getExpenses:", err);
-
-    res.status(500).json({
-      success: false,
-      message: err.message,
-      stack: err.stack
-    });
+    console.error(err);
   }
 };
 
