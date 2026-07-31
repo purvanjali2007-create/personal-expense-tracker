@@ -37,27 +37,31 @@ const addExpense = async (req, res) => {
 
 // Get All Expenses
 const getExpenses = async (req, res) => {
-  try {
-    console.log("Controller reached");
 
-    const expenses = await Expense.find();
+    try {
 
-    console.log("Expenses:", expenses);
+        const expenses = await Expense.find().sort({
+            date: -1
+        });
 
-    return res.status(200).json({
-      success: true,
-      data: expenses,
-    });
-  } catch (err) {
-    console.error("ERROR:", err);
+        res.status(200).json({
+            success: true,
+            count: expenses.length,
+            data: expenses
+        });
 
-    return res.status(500).json({
-      success: false,
-      message: err.message,
-    });
-  }
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+
 };
 
+// Delete Expense
 // Delete Expense
 const deleteExpense = async (req, res) => {
 

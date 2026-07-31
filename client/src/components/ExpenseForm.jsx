@@ -1,30 +1,24 @@
 import { useState, useEffect } from "react";
 import API from "../services/api";
 
-const ExpenseForm = ({
-  getExpenses,
-  editExpense,
-  setEditExpense,
-}) => {
+const ExpenseForm = ({ getExpenses, editExpense, setEditExpense }) => {
 
   const [expense, setExpense] = useState({
     amount: "",
     description: "",
     category: "",
-    date: ""
+    date: "",
   });
 
   useEffect(() => {
 
     if (editExpense) {
-
       setExpense({
         amount: editExpense.amount,
         description: editExpense.description,
         category: editExpense.category,
-        date: editExpense.date.substring(0,10)
+        date: editExpense.date.substring(0, 10),
       });
-
     }
 
   }, [editExpense]);
@@ -33,7 +27,7 @@ const ExpenseForm = ({
 
     setExpense({
       ...expense,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
 
   };
@@ -44,21 +38,21 @@ const ExpenseForm = ({
 
     if (editExpense) {
 
-      await API.put(`/${editExpense._id}`, expense);
+      await API.put(`/expenses/${editExpense._id}`, expense);
 
       setEditExpense(null);
 
     } else {
 
-      await API.post("/", expense);
+      await API.post("/api/expenses", expense);
 
     }
 
     setExpense({
-      amount:"",
-      description:"",
-      category:"",
-      date:""
+      amount: "",
+      description: "",
+      category: "",
+      date: "",
     });
 
     getExpenses();
@@ -104,16 +98,13 @@ const ExpenseForm = ({
         required
       />
 
-      <button type="submit">
-
+      <button>
         {editExpense ? "Update Expense" : "Add Expense"}
-
       </button>
 
     </form>
 
   );
-
 };
 
 export default ExpenseForm;
