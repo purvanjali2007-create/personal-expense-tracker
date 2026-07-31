@@ -8,7 +8,7 @@ require("dotenv").config();
 const connectDB = require("./config/db");
 const expenseRoutes = require("./routes/expenseRoutes");
 
-const app = express();
+
 
 // Connect Database
 connectDB();
